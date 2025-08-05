@@ -1,5 +1,5 @@
 
-## Bare mininum C++ project template for K1921VG015
+## Bare minimum C++ project template for K1921VG015
 
 IDE - VSCode
 Build system - SCons
