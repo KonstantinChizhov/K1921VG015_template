@@ -16,3 +16,4 @@ Target board - NIIET v.2
 - configure appropriate build tool paths in SConscript and .vscode/launch.json
 - 'scons' command for build and flash (Ctrl+Shif+B in VSCode)
 - F5 for dedug in VSCode
+
