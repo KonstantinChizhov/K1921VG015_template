@@ -144,8 +144,6 @@ formattedLinkerScript = "#/ldscripts/k1921vg015_flash.ld"
 linkerscript = env.File(formattedLinkerScript).srcnode().abspath
 linkerscript = "-T%s" % linkerscript
 
-print(linkerscript)
-
 env.Append(
     LINKFLAGS=[
         "-Wl,--gc-sections",
@@ -170,15 +168,16 @@ def ObjectName(srcName):
     return os.path.join("#./build", f"{srcFilename}.o")
 
 
-sources = [
+platform_sources = [
     "#/src/platform/startup.c",
     "#/src/platform/plic.c",
-    "#src/main.cpp",
+    "#/src/platform/debug.cpp",
 ]
 
+cpp_sources = [f.srcnode().abspath for f in env.Glob('#/src/*.cpp')]
+c_sources = [f.srcnode().abspath for f in env.Glob('#/src/*.c')]
 
-objects = [env.Object(ObjectName(src), src) for src in sources]
-
+objects = [env.Object(ObjectName(src), src) for src in platform_sources + cpp_sources + c_sources]
 
 elf = env.Program("test.elf", objects)
 hex = env.Hex("test.hex", elf)
