@@ -4,6 +4,12 @@ import datetime
 env = Environment()
 env["ENV"] = os.environ
 
+env["FLASH_TOOL_PATH"] = "C:/tools/openocd_Patch_Niiet/"
+
+env["FLASH_TOOL"] = f'{env["FLASH_TOOL_PATH"]}/openocd.exe'
+env["OCD_INTERFACE"] = "interface/ftdi/vg015_dev_onboard_ftdi.cfg"
+env["OCD_TARGET"] = "target/k1921vg015.cfg"
+
 target_arch = "rv32imfc_zicsr_zifencei"
 target_abi = "ilp32f"
 
@@ -43,11 +49,7 @@ disasmBuilder = Builder(
 )
 
 
-env["FLASH_TOOL_PATH"] = "C:/tools/openocd_Patch_Niiet/"
 
-env["FLASH_TOOL"] = f'{env["FLASH_TOOL_PATH"]}/openocd.exe'
-env["OCD_INTERFACE"] = "interface/ftdi/vg015_dev_onboard_ftdi.cfg"
-env["OCD_TARGET"] = "target/k1921vg015.cfg"
 
 
 def openOcdFlashImage(target, source, env):
