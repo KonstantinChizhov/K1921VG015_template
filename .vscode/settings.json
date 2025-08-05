@@ -1,0 +1,9 @@
+{
+    "files.associations": {
+        ".fantomasignore": "ignore",
+        "k1921vg015.h": "c",
+        "csr.h": "c",
+        "unistd.h": "c",
+        "errno.h": "c"
+    }
+}

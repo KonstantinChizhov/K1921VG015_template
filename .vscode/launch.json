@@ -1,0 +1,31 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "local_openocd/rv64_elf_gnu_scr7_l2/#PROJECT_NAME#",
+            "variables": {
+                "programPath": "${workspaceFolder}\\build\\test.elf"
+            },
+            "type": "cppdbg",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "program": "${programPath}",
+            "debugServerPath": "C:/tools/openocd_Patch_Niiet/openocd",
+            "debugServerArgs": "-sC:/tools/openocd_Patch_Niiet/scripts -f interface/ftdi/vg015_dev_onboard_ftdi.cfg -f target/k1921vg015.cfg ",
+            "filterStderr": true,
+            "miDebuggerPath": "riscv-none-elf-gdb",
+            "windows": {
+                "debugServerPath": "C:/tools/openocd_Patch_Niiet/openocd.exe",
+                "miDebuggerPath": "C:/tools/xpack-riscv-none-elf-gcc-14.2.0-3/bin/riscv-none-elf-gdb.exe"
+            },
+            "miDebuggerServerAddress": ":3333",
+            "postRemoteConnectCommands": [
+                {
+                    "text": "load"
+                }
+            ],
+            "useExtendedRemote": true,
+            "stopAtEntry": true
+        }
+    ]
+}
