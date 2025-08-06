@@ -15,7 +15,10 @@ target_abi = "ilp32f"
 
 if not env.Detect("riscv-none-elf-gcc"):
     raise Exception("riscv-none-elf-gcc not found")
-env["TOOL_PREFIX"] = "riscv-none-elf-"
+# env["TOOL_PREFIX"] = "riscv-none-elf-"
+env["TOOL_PREFIX"] = (
+    "C:/Users/Konstantin/Downloads/sc-dt/riscv-gcc/bin/riscv64-unknown-elf-"
+)
 
 prefix = env["TOOL_PREFIX"]
 env["CC"] = prefix + "gcc"
@@ -47,9 +50,6 @@ binBuilder = Builder(
 disasmBuilder = Builder(
     action="$OBJDUMP -h -S $SOURCE > $TARGET", src_suffix=".elf", suffix=".lss"
 )
-
-
-
 
 
 def openOcdFlashImage(target, source, env):
@@ -109,12 +109,15 @@ env.Append(
         "-ffreestanding",
         "-g3",
         "-ggdb",
+        "--specs=nano.specs",
+        "-nostdlib",
     ]
 )
 
 env.Append(
     CPPDEFINES={
         "F_OSC": 16000000,
+        "__STDC_HOSTED__": "1",
     }
 )
 
@@ -174,10 +177,13 @@ platform_sources = [
     "#/src/platform/debug.cpp",
 ]
 
-cpp_sources = [f.srcnode().abspath for f in env.Glob('#/src/*.cpp')]
-c_sources = [f.srcnode().abspath for f in env.Glob('#/src/*.c')]
+cpp_sources = [f.srcnode().abspath for f in env.Glob("#/src/*.cpp")]
+c_sources = [f.srcnode().abspath for f in env.Glob("#/src/*.c")]
 
-objects = [env.Object(ObjectName(src), src) for src in platform_sources + cpp_sources + c_sources]
+objects = [
+    env.Object(ObjectName(src), src)
+    for src in platform_sources + cpp_sources + c_sources
+]
 
 elf = env.Program("test.elf", objects)
 hex = env.Hex("test.hex", elf)
