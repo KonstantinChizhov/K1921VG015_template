@@ -162,6 +162,7 @@ env.Append(
         f"-march={target_arch}",
         f"-mabi={target_abi}",
         "-fno-use-cxa-atexit",
+        "--specs=nano.specs",
     ]
 )
 

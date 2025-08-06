@@ -8,10 +8,10 @@ void trap_handler(void);
 void trap_entry(void);
 int main(int argc, char **argv);
 
-extern unsigned long __bss_start, __bss_end;
-extern unsigned long __data_target_start, __data_target_end, __data_source_start;
-extern unsigned long __sdata_target_start, __sdata_target_end, __sdata_source_start;
-extern unsigned long __STACK_END__;
+extern unsigned char __bss_start, __bss_end;
+extern unsigned char __data_target_start, __data_target_end, __data_source_start;
+extern unsigned char __sdata_target_start, __sdata_target_end, __sdata_source_start;
+extern unsigned char __STACK_END__;
 
 extern unsigned long __ctors_start__;
 extern unsigned long __ctors_end__;
