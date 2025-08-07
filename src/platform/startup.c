@@ -33,6 +33,7 @@ __attribute__((section(".startup.entry"))) __attribute__((noreturn)) __attribute
     write_csr(mie, 0);
     write_csr(mip, 0);
     set_csr(mstatus, (0b01 << 13)); // FS=0b01, FPU status: initial
+    write_csr(fcsr, 0);
 
     asm volatile(
         "la sp, __STACK_END__ \n"
