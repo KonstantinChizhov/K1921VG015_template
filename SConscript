@@ -1,10 +1,10 @@
 import os
 import datetime
+import shutil
 
-env = Environment()
-env["ENV"] = os.environ
+env = Environment(tools=["gcc", "g++", "gnulink", "ar", "gas"], ENV=os.environ)
 
-env["FLASH_TOOL_PATH"] = "C:/tools/openocd_Patch_Niiet/"
+env["FLASH_TOOL_PATH"] = os.path.dirname(shutil.which("openocd"))
 
 env["FLASH_TOOL"] = f'{env["FLASH_TOOL_PATH"]}/openocd.exe'
 env["OCD_INTERFACE"] = "interface/ftdi/vg015_dev_onboard_ftdi.cfg"
@@ -15,10 +15,8 @@ target_abi = "ilp32f"
 
 if not env.Detect("riscv-none-elf-gcc"):
     raise Exception("riscv-none-elf-gcc not found")
-# env["TOOL_PREFIX"] = "riscv-none-elf-"
-env["TOOL_PREFIX"] = (
-    "C:/Users/Konstantin/Downloads/sc-dt/riscv-gcc/bin/riscv64-unknown-elf-"
-)
+env["TOOL_PREFIX"] = "riscv-none-elf-"
+
 
 prefix = env["TOOL_PREFIX"]
 env["CC"] = prefix + "gcc"
@@ -56,7 +54,8 @@ def openOcdFlashImage(target, source, env):
     command = '"$FLASH_TOOL" '
     script_path = "scripts"
     if os.path.isdir(os.path.join(env["FLASH_TOOL_PATH"], script_path)):
-        command += f'-s "%(FLASH_TOOL_PATH)s{script_path}" '
+        command += f'-s "%(FLASH_TOOL_PATH)s/{script_path}" '
+
     src_path = source[0].abspath.replace("\\", "/")
 
     command += "-f %(OCD_INTERFACE)s "
@@ -96,7 +95,7 @@ env.Append(
         "-msmall-data-limit=8",
         "-mstrict-align",
         "-mno-save-restore",
-        "-Og",
+        "-O3",
         "-fmessage-length=0",
         "-fsigned-char",
         "-ffunction-sections",
@@ -106,18 +105,19 @@ env.Append(
         # "-flto",
         "-Wall",
         "-Wextra",
-        "-ffreestanding",
+        # "-ffreestanding",
         "-g3",
         "-ggdb",
         "--specs=nano.specs",
-        "-nostdlib",
+        # "-nostdlib",
     ]
 )
 
 env.Append(
     CPPDEFINES={
         "F_OSC": 16000000,
-        "__STDC_HOSTED__": "1",
+        "F_CPU": 50000000,
+        # "__STDC_HOSTED__": "1",
     }
 )
 
@@ -176,6 +176,7 @@ platform_sources = [
     "#/src/platform/startup.c",
     "#/src/platform/plic.c",
     "#/src/platform/debug.cpp",
+    "#/src/platform/chrono.cpp",
 ]
 
 cpp_sources = [f.srcnode().abspath for f in env.Glob("#/src/*.cpp")]

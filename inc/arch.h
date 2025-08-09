@@ -124,7 +124,7 @@ extern "C" {
 static inline unsigned long __attribute__((const)) arch_misa(void)
 {
     unsigned long res;
-    asm ("csrr %0, misa" : "=r"(res));
+    asm volatile("csrr %0, misa" : "=r"(res));
     return res;
 }
 
@@ -136,42 +136,42 @@ static inline unsigned long __attribute__((const)) arch_cpuid(void)
 static inline unsigned long __attribute__((const)) arch_impid(void)
 {
     unsigned long res;
-    asm ("csrr %0, mimpid" : "=r"(res));
+    asm volatile("csrr %0, mimpid" : "=r"(res));
     return res;
 }
 
 static inline unsigned long arch_vendorid(void)
 {
     unsigned long res;
-    asm ("csrr %0, mvendorid" : "=r"(res) :: "memory");
+    asm volatile("csrr %0, mvendorid" : "=r"(res) :: "memory");
     return res;
 }
 
 static inline unsigned long __attribute__((const)) arch_archid(void)
 {
     unsigned long res;
-    asm ("csrr %0, marchid" : "=r"(res));
+    asm volatile("csrr %0, marchid" : "=r"(res));
     return res;
 }
 
 static inline unsigned long __attribute__((const)) arch_hartid(void)
 {
     unsigned long res;
-    asm ("csrr %0, mhartid" : "=r"(res));
+    asm volatile("csrr %0, mhartid" : "=r"(res));
     return res;
 }
 
 static inline unsigned long arch_mtval(void)
 {
     unsigned long res;
-    asm ("csrr %0, mtval" : "=r"(res) :: "memory");
+    asm volatile("csrr %0, mtval" : "=r"(res) :: "memory");
     return res;
 }
 
 static inline unsigned long arch_cycle(void)
 {
     unsigned long res;
-    asm ("csrr %0, cycle" : "=r"(res) :: "memory");
+    asm volatile("csrr %0, cycle" : "=r"(res) :: "memory");
     return res;
 }
 
@@ -200,7 +200,7 @@ static inline uint64_t arch_cycle64(void)
 static inline unsigned long arch_instret(void)
 {
     unsigned long res;
-    asm ("csrr %0, instret" : "=r"(res) :: "memory");
+    asm volatile("csrr %0, instret" : "=r"(res) :: "memory");
     return res;
 }
 

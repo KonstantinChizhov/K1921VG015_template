@@ -3,17 +3,19 @@
         {
             "name": "Risc-v",
             "includePath": [
-                "${workspaceFolder}/inc",
+                "${workspaceFolder}/inc"
             ],
             "defines": [
                 "_DEBUG",
                 "UNICODE",
                 "_UNICODE",
+                "F_CPU=50000000",
+                "F_OSCC=16000000",
                 "__cpp_rtti=0",
                 "__cpp_exceptions=0",
                 "_USE_MATH_DEFINES=1"
             ],
-            "compilerPath": "C:\\tools\\xpack-riscv-none-elf-gcc-14.2.0-3\\bin\\riscv-none-elf-gcc",
+            "compilerPath": "riscv-none-elf-gcc",
             "cStandard": "c11",
             "cppStandard": "c++20",
             "intelliSenseMode": "gcc-x64"
